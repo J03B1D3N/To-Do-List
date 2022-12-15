@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
+$header-footer: rgb(170, 139, 86);
+$nav: rgb(57, 81, 68);
+$main:rgb(78, 108, 80);
+$todo:rgb(240, 235, 206);
+
+@mixin hf {
+    background-color: $header-footer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body {
+    background-color: black;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    height: 100vh;
+    width: 100vw;
+}
+header {
+    grid-row: 1 / 2;
+    grid-column: 1/7;
+    @include hf
+}
+footer {
+    grid-row: 10/11;
+    grid-column: 1/7;
+    @include hf
+}
+nav {
+    grid-row: 2 / 10;
+    grid-column: 1/2;
+    background-color: $nav;
+}
+main {
+    grid-column: 2 / -1;
+    grid-row: 2/10;
+    background-color: $main;
+}
