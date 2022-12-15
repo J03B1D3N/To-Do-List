@@ -11,6 +11,14 @@ $header-footer: rgb(170, 139, 86);
 $nav: rgb(57, 81, 68);
 $main:rgb(78, 108, 80);
 $todo:rgb(240, 235, 206);
+$butons: rgb(170, 139, 86);
+
+@mixin flex-v {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 @mixin hf {
     background-color: $header-footer;
@@ -40,9 +48,46 @@ nav {
     grid-row: 2 / 10;
     grid-column: 1/2;
     background-color: $nav;
+    display: grid;
+    grid-template-rows: repeat(auto-fill, fit-content);
+    position: relative;
+}
+.btn {
+    height: 5%;
+    width: 45%;
+    position: absolute;
+    bottom: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: $butons;
+    transition: 0.2s;
+    font-weight: 600;
+}
+.btn:hover {
+    background-color: rgb(130, 90, 21);
+}
+.btn:active {
+    scale: 0.9;
+}
+.delete {
+    left: 5px;
+    color: rgb(128, 31, 31);
+}
+.create {
+    right: 5px;
+}
+.project {
+    border: 3px solid grey;
+    width: fit-content;
+    padding: 0px 10px;
+    margin: 20px;
+    border-radius: 5px;
+    background-color: $todo;
+    color: black;
 }
 main {
     grid-column: 2 / -1;
     grid-row: 2/10;
     background-color: $main;
 }
+
