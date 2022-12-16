@@ -18,16 +18,15 @@ constructor  (title) {
         this.addProjectBtn = document.getElementById('add')
         this.projectList = document.getElementById('projectList')
         this.deleteProject = document.getElementById('delete')
-        this.div = document.createElement('div')
     },
     addProject: function() {
         this.projectListArr.push(this.project)
     },
     bindEvents: function() {
         this.addProjectBtn.addEventListener('click', () => {
-            this.createProject().bind(this)
-            this.addProject.bind(this)
-            this.renderProjectList().bind(this)
+            this.createProject()
+            this.addProject()
+            this.renderProjectList()
         });
     },
     createProject: function() {
@@ -37,11 +36,16 @@ constructor  (title) {
         while (this.projectList.firstChild) {
             this.projectList.removeChild(this.projectList.firstChild);
         }
-        for(let i = 0; i < projectList.length; i++) {
-            
+        
+        for(let i = 0; i < this.projectListArr.length; i++) {
+            const div = document.createElement('div')
+            div.classList.add('project')
+            div.innerHTML = this.projectListArr[i].title
+            const deleteBtn = document.createElement('button')
+            deleteBtn.classList.add('delete')
+            div.appendChild(deleteBtn)
+            this.projectList.appendChild(div)
         }
-        console.log(this.projectListArr)
-
     }
 }
 todoApp.init();
