@@ -17,24 +17,37 @@ import './style.scss';
         this.deleteProjectBtn = document.querySelectorAll('.delete')
         this.projectTitleInput = document.getElementById('projectTitle')
         this.projectTitleForm = document.getElementById('projectTitleForm')
+        this.projectTitleInputDiv = document.getElementById('titleBtns')
+        this.projectTitleInputConfirm = document.getElementById('submitTitleInput')
+        this.projectTitleInputCancel = document.getElementById('cancelTitleInput')
     },
     bindEvents: function() {
-        this.projectTitleForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.createProject();
-            this.addProject();
-            this.projectTitleInput.value = ''
-            this.projectTitleInput.style.display = 'none'
-            this.renderProjectList();
-
-        }),
         this.addProjectBtn.addEventListener('click', (e) => {
-           this.projectTitleInput.style.display = 'block'
+            this.projectTitleInputDiv.style.display = 'flex'
            this.projectTitleInput.focus()
             // this.createProject()
             // this.addProject()
             // this.renderProjectList()
         });
+        this.projectTitleForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.createProject();
+            this.addProject();
+            this.projectTitleInput.value = ''
+            this.projectTitleInputDiv.style.display = 'none'
+            this.renderProjectList();
+        }),
+        this.projectTitleInputConfirm.addEventListener('click', () => {
+            this.createProject();
+            this.addProject();
+            this.projectTitleInput.value = ''
+            this.projectTitleInputDiv.style.display = 'none'
+            this.renderProjectList();
+        }),
+        this.projectTitleInputCancel.addEventListener('click', () => {
+            this.projectTitleInput.value = ''
+            this.projectTitleInputDiv.style.display = 'none'
+        })
         
     },
     addProject: function() {
