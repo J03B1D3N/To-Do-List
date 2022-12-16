@@ -39,11 +39,14 @@ constructor  (title) {
         
         for(let i = 0; i < this.projectListArr.length; i++) {
             const div = document.createElement('div')
+            const title = document.createElement('div')
+            title.classList.add('title')
             div.classList.add('project')
-            div.innerHTML = this.projectListArr[i].title
             const deleteBtn = document.createElement('button')
             deleteBtn.classList.add('delete')
             div.appendChild(deleteBtn)
+            div.appendChild(title)
+            title.textContent = this.projectListArr[i].title
             this.projectList.appendChild(div)
         }
     }
