@@ -1,9 +1,6 @@
+import { th } from 'date-fns/locale';
 import './style.scss';
-class Project {
-constructor  (title) {
-    this.title = title
-}
-}
+
 (function() {
     
     let todoApp = {
@@ -18,21 +15,38 @@ constructor  (title) {
         this.addProjectBtn = document.getElementById('add')
         this.projectList = document.getElementById('projectList')
         this.deleteProjectBtn = document.querySelectorAll('.delete')
-      
+        this.projectTitleInput = document.getElementById('projectTitle')
+        this.projectTitleForm = document.getElementById('projectTitleForm')
+    },
+    bindEvents: function() {
+        this.projectTitleForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.createProject();
+            this.addProject();
+            this.projectTitleInput.value = ''
+            this.projectTitleInput.style.display = 'none'
+            this.renderProjectList();
+
+        }),
+        this.addProjectBtn.addEventListener('click', (e) => {
+           this.projectTitleInput.style.display = 'block'
+           this.projectTitleInput.focus()
+            // this.createProject()
+            // this.addProject()
+            // this.renderProjectList()
+        });
+        
     },
     addProject: function() {
         this.projectListArr.push(this.project)
     },
-    bindEvents: function() {
-        this.addProjectBtn.addEventListener('click', () => {
-            this.createProject()
-            this.addProject()
-            this.renderProjectList()
-        });
-        
-    },
     createProject: function() {
-        this.project = new Project('john')
+        class Project {
+            constructor  (projectTitleInput) {
+                this.title = projectTitleInput
+            }
+            }
+        this.project = new Project(this.projectTitleInput.value)
     },
     deleteProject: function(event) {
         const target = event.currentTarget.parentNode

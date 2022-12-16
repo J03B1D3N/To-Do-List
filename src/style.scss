@@ -167,5 +167,20 @@ main {
     grid-column: 2 / -1;
     grid-row: 2/10;
     background-color: $main;
+    position: relative;
+    #projectTitle {
+        position: absolute;
+        bottom: 10px;
+        height: 2rem;
+        margin-left: 20px;
+        border-radius: 10px;
+        border: none;
+        color: black;
+        padding-left: 20px;
+        display: none;
+    }
+    #projectTitle:focus {
+        outline: none;
+    }
 }
 
