@@ -1,0 +1,18 @@
+To Dos' shoud have {
+title
+description
+dueDate
+priority
+}
+include notes or a checklist
+
+put all these to do tasks in projects, which in themselves are to dos.
+
+keep everything in seperate modules.
+
+Interface shoud {
+    view all projects
+    vie all to dos in each projects
+    expand a single todo to see/edit its details
+    delete a todo
+}
