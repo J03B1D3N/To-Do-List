@@ -37,7 +37,7 @@ import './style.scss';
             this.projectTitleInputDiv.style.display = 'none'
             this.renderProjectList();
         }),
-        this.projectTitleInputConfirm.addEventListener('click', () => {
+        this.projectTitleInputConfirm.addEventListener('submit', () => {
             this.createProject();
             this.addProject();
             this.projectTitleInput.value = ''

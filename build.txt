@@ -16,3 +16,6 @@ Interface shoud {
     expand a single todo to see/edit its details
     delete a todo
 }
+
+projects are objects in an array
+to add to dos to projects we need to add an array method to the project objects i think

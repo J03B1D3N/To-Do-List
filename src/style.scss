@@ -32,6 +32,7 @@ $nav: rgb(57, 81, 68);
 $main:rgb(78, 108, 80);
 $todo:rgb(240, 235, 206);
 $buttons: rgb(170, 139, 86);
+$date-bc: rgb(195, 191, 166);
 
 @mixin flex-v {
     display: flex;
@@ -169,9 +170,77 @@ main {
     grid-row: 2/10;
     background-color: $main;
     position: relative;
+    @include flex-v;
+    .toDoListTitle {
+        width: 100%;
+        height: fit-content;
+        text-align: center;
+        font-size: 3rem;
+        margin: 20px;
+    }
+    .toDoList {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-auto-flow: row;
+        grid-auto-rows: min-content;
+        gap: 5px;
+        justify-items: center;
+        
+        .toDo {
+            background-color: rgb(255, 169, 169);
+            border: none;
+            border-radius: 5px;
+            width: 60%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 15px;
+            .toDoTitle {
+                color: black;
+                font-size: 1.5rem;
+
+            }
+            .markDone {
+                color: black;
+                padding: 0px 5px;
+            }
+            .markDone:hover {
+                cursor: pointer;
+                background-color: rgb(174, 110, 110)
+            }
+            
+            .toDoRightSide {
+                display: flex;
+                align-items: center;
+                gap: 25px
+                ;
+                #deleteToDoBtn {
+                    height: 1.3rem;
+                    width: 1.3rem;
+                }
+                #deleteToDoBtn:hover {
+                    background-color: rgb(174, 110, 110);
+                }
+                #date {
+                    color: black;
+                    border: none;
+                    padding: 0px 15px;
+                    background-color: $date-bc;
+                    border-radius: 5px;
+                }
+                #date:focus {
+                    outline: none
+                }
+            }
+            
+        }
+    }
+
     .titleBtns {
         position: absolute;
         bottom: 10px;
+        left: 10px;
         height: 2rem;
         margin-left: 20px;
         display: none;
@@ -186,6 +255,7 @@ main {
             align-items: center;
             border-radius: 15px;
             transition: 0.1s;
+            border: none;
         }
         .titleInputBtns:hover {
             scale: 1.1
@@ -222,30 +292,12 @@ main {
             border-radius: 15px;
             padding: 0px 20px;
             color: black;
+            width: fit-content;
         }
     }
     #projectTitle:focus {
         outline: none;
     }
-    //  {
-    //     position: absolute;
-    //     bottom: 10px;
-    //     left: 310px;
-    //     height: 2rem;
-    //     width: 5rem;
-    //     border-radius: 10px;
-    //     border: none;
-    //     display: block;
-    //     background-color: $main;
-    //     display: flex;
-    //     justify-content: center;
-    //     align-items: center;
-    //     gap: 10px;
-    //     #submitTitleInput, #cancelTitleInput{
-    //         height: 80%;
-    //         width: 35%;
-    //     }
-    // }
     
     
 }
