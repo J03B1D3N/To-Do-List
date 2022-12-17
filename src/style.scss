@@ -33,6 +33,8 @@ $main:rgb(78, 108, 80);
 $todo:rgb(240, 235, 206);
 $buttons: rgb(170, 139, 86);
 $date-bc: rgb(195, 191, 166);
+$toDoBR: 5px;
+$todoInput: rgb(255, 250, 220);
 
 @mixin flex-v {
     display: flex;
@@ -108,6 +110,9 @@ nav {
                 color: black;
                 font-size: 1.5rem;
             }
+            .title:hover {
+                cursor: pointer;
+            }
             .delete {
                 height: 1.5rem;
                 width: 1.5rem;
@@ -133,7 +138,6 @@ nav {
         }
         .project:hover{
             background-color: grey;
-            cursor: pointer;
         }
     }
     .btns {
@@ -178,6 +182,13 @@ main {
         font-size: 3rem;
         margin: 20px;
     }
+    .addToDoBtn {
+      display: flex;  
+      align-items: center;
+      gap: 5px;
+      color: black;
+      padding: 0px 10px;
+    }
     .toDoList {
         width: 100%;
         height: 100%;
@@ -187,10 +198,120 @@ main {
         gap: 5px;
         justify-items: center;
         
+        .addToDo {
+            height: 1.7rem;
+            width: 60%;
+            display: flex;
+            background-color: $todo;
+            border-radius: $toDoBR;
+            align-items: center;
+            .addToDoBtn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 1.7rem;
+                height: 1.7rem;
+                margin-left: 5px;
+                position: relative;
+            }
+            .addToDoBtn:before, .addToDoBtn:after {
+                content: '';
+                height: 60%;
+                width: 8%;
+                background-color: black;
+                position: absolute;
+            }
+            .addToDoBtn:before {
+                transform: rotate(90deg);
+            }
+            .addToDoBtnTitle {
+                color: black;
+                display: flex;
+                align-items: center;
+            }
+        }
+        .addToDo:hover {
+            background-color: rgb(167, 163, 143);
+            cursor: pointer;
+        }
+        .toDoInputField {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 1.7rem;
+            gap: 15px;
+            background-color: $todo;
+            border-radius: $toDoBR;
+            width: 60%;
+            padding: 0px 10px;
+            display: none;
+            #toDoInput {
+                border: 1px solid black;
+                background-color: $todo;
+                border-radius: $toDoBR;
+                height: 90%;
+                color: black;
+                padding: 0px 20px;
+            }
+            .toDoInputFieldRight {
+                display: flex;
+                gap: 5px;
+                align-items: center;
+                #toDoInputDate{
+                    color: black;
+                    border: none;
+                    padding: 0px 15px;
+                    background-color: $date-bc;
+                    border-radius: 5px;
+                }
+               
+                .toDoInputBtns {
+                    height: 1.5rem;
+                    width: 1.5rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 15px;
+                    transition: 0.1s;
+                    border: none;
+                }
+                .toDoInputBtns:hover {
+                    scale: 1.1
+                }
+                .toDoInputBtns:active {
+                    scale: 0.95
+                }
+                #cancelToDoInput {
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: rgb(178, 86, 86);
+                }
+                #cancelToDoInput:before, #cancelToDoInput:after {
+                    content: '';
+                    height: 70%;
+                    width: 8%;
+                    background-color: white;
+                    position: absolute;
+                }
+                #cancelToDoInput:before {
+                    transform: rotate(45deg);
+                }
+                #cancelToDoInput:after {
+                    transform: rotate(-45deg);
+                }
+                #submitToDoInput {
+                    background-color: rgb(56, 137, 56);
+                }
+            }
+            
+        }
         .toDo {
             background-color: rgb(255, 169, 169);
             border: none;
-            border-radius: 5px;
+            border-radius: $toDoBR;
+            height: 1.7rem;
             width: 60%;
             display: flex;
             justify-content: space-between;
@@ -218,6 +339,23 @@ main {
                 #deleteToDoBtn {
                     height: 1.3rem;
                     width: 1.3rem;
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                #deleteToDoBtn:before, #deleteToDoBtn:after {
+                    content: '';
+                    height: 90%;
+                    width: 10%;
+                    background-color: black;
+                    position: absolute;
+                }
+                #deleteToDoBtn:before {
+                    transform: rotate(45deg);
+                }
+                #deleteToDoBtn:after {
+                    transform: rotate(-45deg);
                 }
                 #deleteToDoBtn:hover {
                     background-color: rgb(174, 110, 110);
