@@ -198,7 +198,7 @@ main {
         grid-auto-rows: min-content;
         gap: 5px;
         justify-items: center;
-        
+        overflow-y: auto;
         .addToDo {
             height: 1.7rem;
             width: 60%;
@@ -335,9 +335,16 @@ main {
             .toDoTitle {
                 color: black;
                 font-size: 1.5rem;
-                width: 40%;
-                height: 1.6rem;
+                width: 58%;
+                height: 1.7rem;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+                overflow: auto;
             }
+            .toDoTitle::-webkit-scrollbar {
+                display: none;
+              }
             .markDone {
                 color: black;
                 padding: 0px 5px;
