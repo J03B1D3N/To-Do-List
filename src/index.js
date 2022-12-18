@@ -1,3 +1,4 @@
+import { add } from 'date-fns';
 import { th } from 'date-fns/locale';
 import './style.scss';
 
@@ -27,7 +28,7 @@ import './style.scss';
         this.toDoListDOM = document.getElementById('toDoList')
     },
     bindEvents: function() {
-           this.addProjectBtn.addEventListener('click', (e) => {
+           this.addProjectBtn.addEventListener('click', () => {
            this.projectTitleInputDiv.style.display = 'flex'
            this.projectTitleInput.focus()
         });
@@ -38,22 +39,23 @@ import './style.scss';
             this.projectTitleInput.value = ''
             this.projectTitleInputDiv.style.display = 'none'
             this.renderProjectList();
-            console.log(this.projectListArr)
+            // this.renderToDo();
         }),
         this.projectTitleInputCancel.addEventListener('click', (e) => {
             e.preventDefault();
             this.projectTitleInput.value = ''
             this.projectTitleInputDiv.style.display = 'none'
         })
-        this.addToDoBtn.addEventListener('click', () => {
-            this.toDoInputFieldForm.style.display = 'flex'
-            this.addToDoBtn.style.display = 'none'
-        })
+        
         this.toDoInputFieldForm.addEventListener('submit', (e) => {
             e.preventDefault();
             this.createToDo();
           
         }) 
+
+        this.toDoInputDate.addEventListener('change', () => {
+            console.log(this.toDoInputDate.value)
+        })
     },
     createProject: function() {
         class Project {
@@ -76,7 +78,11 @@ import './style.scss';
     renderProjectList: function () {
         while (this.projectList.firstChild) {
             this.projectList.removeChild(this.projectList.firstChild);
-        }
+        };
+
+        // while (this.toDoListDOM.children[1]) {
+        //    this.toDoListDOM.removeChild(this.toDoListDOM.children[1])
+        // };
         
         for(let i = 0; i < this.projectListArr.length; i++) {
             const div = document.createElement('div')
@@ -92,6 +98,37 @@ import './style.scss';
             div.appendChild(title)
             title.textContent = this.projectListArr[i].title
             this.projectList.appendChild(div)
+
+
+            for(let u = 0; u < this.projectListArr[i].toDos.length; u++) {
+                if(this.projectListArr[i].toDos[u] === "add ToDo") {
+
+                    const addToDo = document.createElement('div')
+                    addToDo.style.display = 'flex'
+                    addToDo.classList.add('addToDo')
+                    addToDo.setAttribute('id', `addToDo${i}`);
+                    const addToDoBtn = document.createElement('div')
+                    addToDoBtn.classList.add('addToDoBtn')
+                    const addToDoBtnTitle = document.createElement('div')
+                    addToDoBtnTitle.classList.add('addToDoBtnTitle')
+                    addToDoBtnTitle.textContent = 'Add a Task';
+    
+                    addToDo.appendChild(addToDoBtn)
+                    addToDo.appendChild(addToDoBtnTitle)
+                    this.toDoListDOM.appendChild(addToDo)
+
+                    addToDo.addEventListener('click', () => {
+                        this.toDoInputFieldForm.style.display = 'flex'
+                        addToDo.style.display = 'none'
+                        this.toDoInputField.style.display = 'flex'
+                    })
+
+
+                } else {
+                    const doDo = document.createElement('div')
+                    toDo.classList.add('toDo')
+                }
+            }
         }
     },
     createToDo: function () {
@@ -109,9 +146,27 @@ import './style.scss';
     },
 
     renderToDo: function () {
-        while (this.toDoListDOM.firstChild) {
-            this.toDoListDOM.removeChild(this.toDoListDOM.firstChild);
-        }
+        // while (this.toDoListDOM.firstChild) {
+        //     this.toDoListDOM.removeChild(this.toDoListDOM.firstChild);
+        // }
+
+        // for(let i = 0; i < this.projectListArr.toDos.length; i++) {
+        //     if(this.projectListArr[i].toDos === "add ToDo") {
+        //         const addToDo = document.createElement('div')
+        //         addToDo.classList.add('addToDo')
+        //         addToDo.setAttribute('id', `addToDo${i}`);
+        //         const addToDoBtn = createElement('div')
+        //         addToDoBtn.classList.add('addToDoBtn')
+        //         const addToDoBtnTitle = document.createElement('div')
+        //         addToDoBtnTitle.classList.add('addToDoBtnTitle')
+        //         addToDoBtnTitle.textContent = 'Add a Task';
+
+        //         addToDo.appendChild(addToDoBtn)
+        //         addToDo.appendChild(addToDoBtnTitle)
+        //         this.toDoListDOM.appendChild(addToDo)
+
+        //     }
+        // }
     }
     
    
