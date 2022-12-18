@@ -39,7 +39,6 @@ import './style.scss';
             this.projectTitleInput.value = ''
             this.projectTitleInputDiv.style.display = 'none'
             this.renderProjectList();
-            // this.renderToDo();
         }),
         this.projectTitleInputCancel.addEventListener('click', (e) => {
             e.preventDefault();
@@ -47,15 +46,7 @@ import './style.scss';
             this.projectTitleInputDiv.style.display = 'none'
         })
         
-        this.toDoInputFieldForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.createToDo();
-          
-        }) 
-
-        this.toDoInputDate.addEventListener('change', () => {
-            console.log(this.toDoInputDate.value)
-        })
+        
     },
     createProject: function() {
         class Project {
@@ -80,9 +71,9 @@ import './style.scss';
             this.projectList.removeChild(this.projectList.firstChild);
         };
 
-        // while (this.toDoListDOM.children[1]) {
-        //    this.toDoListDOM.removeChild(this.toDoListDOM.children[1])
-        // };
+        while (this.toDoListDOM.children[1]) {
+           this.toDoListDOM.removeChild(this.toDoListDOM.children[1])
+        };
         
         for(let i = 0; i < this.projectListArr.length; i++) {
             const div = document.createElement('div')
@@ -106,7 +97,8 @@ import './style.scss';
                     const addToDo = document.createElement('div')
                     addToDo.style.display = 'flex'
                     addToDo.classList.add('addToDo')
-                    addToDo.setAttribute('id', `addToDo${i}`);
+                    addToDo.setAttribute('id', `addToDo`);
+                    addToDo.setAttribute('data-id', `${i}`)
                     const addToDoBtn = document.createElement('div')
                     addToDoBtn.classList.add('addToDoBtn')
                     const addToDoBtnTitle = document.createElement('div')
@@ -120,57 +112,71 @@ import './style.scss';
                     addToDo.addEventListener('click', () => {
                         this.toDoInputFieldForm.style.display = 'flex'
                         addToDo.style.display = 'none'
-                        this.toDoInputField.style.display = 'flex'
+                        this.toDoInputFieldForm.setAttribute('data-id', `${i}`)
+                        this.toDoInputField.focus();
                     })
 
-
+                    this.toDoInputFieldForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.createToDo();
+                        this.addToDo();
+                        this.renderProjectList();
+                        this.toDoInputFieldForm.style.display = 'none'
+                        this.toDoInputField.value = '';
+                        this.toDoInputDate.value = '';
+                    } , {once: true}) 
+            
                 } else {
-                    const doDo = document.createElement('div')
+
+                    const toDo = document.createElement('div')
                     toDo.classList.add('toDo')
+
+                    const toDoTitle = document.createElement('div')
+                    toDoTitle.classList.add('toDoTitle')
+                    toDoTitle.textContent =  this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].title;
+
+                    const toDoRightSide = document.createElement('div')
+                    toDoRightSide.classList.add('toDoRightSide')
+
+                    const date = document.createElement('input')
+                    date.setAttribute('type', 'date')
+                    date.setAttribute('id', 'date')
+                    date.value =  this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].date
+
+                    const markDone = document.createElement('div')
+                    markDone.classList.add('markDone')
+                    markDone.setAttribute('id', 'markDone')
+                    markDone.textContent = 'Mark Done'
+
+                    const deleteToDoBtn = document.createElement('div')
+                    deleteToDoBtn.setAttribute('id', 'deleteToDoBtn')
+
+                    toDoRightSide.appendChild(date)
+                    toDoRightSide.appendChild(markDone)
+                    toDoRightSide.appendChild(deleteToDoBtn)
+
+                    toDo.appendChild(toDoTitle)
+                    toDo.appendChild(toDoRightSide)
+
+                    this.toDoListDOM.appendChild(toDo)
                 }
             }
         }
     },
     createToDo: function () {
-        class Task {
+        class ToDo {
             constructor (title, date) {
                 this.title = title;
                 this.date = date;
             }
         }
-        this.toDo = new Task(this.toDoInputField.value, this.toDoInputDate.value)
+        this.toDo = new ToDo(this.toDoInputField.value, this.toDoInputDate.value)
     },
 
-    addToDo: function (n) {
-        this.projectListArr[n].toDos.push(this.toDo)
+    addToDo: function (o) {
+        this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos.push(this.toDo)
     },
 
-    renderToDo: function () {
-        // while (this.toDoListDOM.firstChild) {
-        //     this.toDoListDOM.removeChild(this.toDoListDOM.firstChild);
-        // }
-
-        // for(let i = 0; i < this.projectListArr.toDos.length; i++) {
-        //     if(this.projectListArr[i].toDos === "add ToDo") {
-        //         const addToDo = document.createElement('div')
-        //         addToDo.classList.add('addToDo')
-        //         addToDo.setAttribute('id', `addToDo${i}`);
-        //         const addToDoBtn = createElement('div')
-        //         addToDoBtn.classList.add('addToDoBtn')
-        //         const addToDoBtnTitle = document.createElement('div')
-        //         addToDoBtnTitle.classList.add('addToDoBtnTitle')
-        //         addToDoBtnTitle.textContent = 'Add a Task';
-
-        //         addToDo.appendChild(addToDoBtn)
-        //         addToDo.appendChild(addToDoBtnTitle)
-        //         this.toDoListDOM.appendChild(addToDo)
-
-        //     }
-        // }
-    }
-    
-   
-    
 }
 todoApp.init();
 })()
