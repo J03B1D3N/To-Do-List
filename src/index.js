@@ -124,6 +124,7 @@ import './style.scss';
                         this.toDoInputFieldForm.style.display = 'none'
                         this.toDoInputField.value = '';
                         this.toDoInputDate.value = '';
+                        console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos)
                     } , {once: true}) 
             
                 } else {
@@ -163,7 +164,7 @@ import './style.scss';
                                 markDone.textContent = 'Mark Done'
                                 toDo.style.backgroundColor = 'rgb(255, 169, 169)'
                                 this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done = false
-                                console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done)
+                                console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].doneg)
                                 break;
 
                         }
@@ -185,7 +186,8 @@ import './style.scss';
                         const target = e.currentTarget.parentNode.parentNode
                         this.toDoListDOM.removeChild(target)
                         this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos.splice(target.dataset.id, 1)
-                        console.log( this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos)
+                        this.renderProjectList();
+                        console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos)
 
                     })
                 }
@@ -197,7 +199,7 @@ import './style.scss';
             constructor (title, date) {
                 this.title = title;
                 this.date = date;
-                this.done = true;
+                this.done = false;
             }
         }
         this.toDo = new ToDo(this.toDoInputField.value, this.toDoInputDate.value)
