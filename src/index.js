@@ -1,6 +1,9 @@
 import { add } from 'date-fns';
 import { th } from 'date-fns/locale';
+import { test } from './cachingDom';
 import './style.scss';
+
+
 
 (function() {
     
@@ -93,113 +96,114 @@ import './style.scss';
             this.projectList.appendChild(div)
 
             div.addEventListener('click', () => {
-                renderProjectsToDos(div.dataset.id)
+                console.log(this.projectListArr)
+                renderProjectsToDos()
             })}
 
 
-           function renderProjectsToDos (number) {
+           function renderProjectsToDos () {
+            console.log(this.projectListArr)
+            // for(let u = 0; u < this.projectListArr[number].toDos.length; u++) {
+            //     if (this.projectListArr[number].toDos[u] === "add ToDo") {
 
-            for(let u = 0; u < this.projectListArr[number].toDos.length; u++) {
-                if(this.projectListArr[number].toDos[u] === "add ToDo") {
-
-                    const addToDo = document.createElement('div')
-                    addToDo.style.display = 'flex'
-                    addToDo.classList.add('addToDo')
-                    addToDo.setAttribute('id', `addToDo`);
-                    addToDo.setAttribute('data-id', `${number}`)
-                    const addToDoBtn = document.createElement('div')
-                    addToDoBtn.classList.add('addToDoBtn')
-                    const addToDoBtnTitle = document.createElement('div')
-                    addToDoBtnTitle.classList.add('addToDoBtnTitle')
-                    addToDoBtnTitle.textContent = 'Add a Task';
+            //         const addToDo = document.createElement('div')
+            //         addToDo.style.display = 'flex'
+            //         addToDo.classList.add('addToDo')
+            //         addToDo.setAttribute('id', `addToDo`);
+            //         addToDo.setAttribute('data-id', `${number}`)
+            //         const addToDoBtn = document.createElement('div')
+            //         addToDoBtn.classList.add('addToDoBtn')
+            //         const addToDoBtnTitle = document.createElement('div')
+            //         addToDoBtnTitle.classList.add('addToDoBtnTitle')
+            //         addToDoBtnTitle.textContent = 'Add a Task';
     
-                    addToDo.appendChild(addToDoBtn)
-                    addToDo.appendChild(addToDoBtnTitle)
-                    this.toDoListDOM.appendChild(addToDo)
+            //         addToDo.appendChild(addToDoBtn)
+            //         addToDo.appendChild(addToDoBtnTitle)
+            //         this.toDoListDOM.appendChild(addToDo)
 
-                    addToDo.addEventListener('click', () => {
-                        this.toDoInputFieldForm.style.display = 'flex'
-                        addToDo.style.display = 'none'
-                        this.toDoInputFieldForm.setAttribute('data-id', `${number}`)
-                        this.toDoInputField.focus();
-                    })
+            //         addToDo.addEventListener('click', () => {
+            //             this.toDoInputFieldForm.style.display = 'flex'
+            //             addToDo.style.display = 'none'
+            //             this.toDoInputFieldForm.setAttribute('data-id', `${number}`)
+            //             this.toDoInputField.focus();
+            //         })
 
-                    this.toDoInputFieldForm.addEventListener('submit', (e) => {
-                        e.preventDefault();
-                        this.createToDo();
-                        this.addToDo();
-                        this.renderProjectList();
-                        this.toDoInputFieldForm.style.display = 'none'
-                        this.toDoInputField.value = '';
-                        this.toDoInputDate.value = '';
-                        console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos)
-                    } , {once: true}) 
+            //         this.toDoInputFieldForm.addEventListener('submit', (e) => {
+            //             e.preventDefault();
+            //             this.createToDo();
+            //             this.addToDo();
+            //             this.renderProjectList();
+            //             this.toDoInputFieldForm.style.display = 'none'
+            //             this.toDoInputField.value = '';
+            //             this.toDoInputDate.value = '';
+            //             console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos)
+            //         } , {once: true}) 
             
-                } else {
+            //     } else {
 
-                    const toDo = document.createElement('div')
-                    toDo.classList.add('toDo')
-                    toDo.setAttribute('data-id', `${u}`)
-                    toDo.style.backgroundColor = this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done ? "lightgreen" : "'rgb(255, 169, 169)"
+            //         const toDo = document.createElement('div')
+            //         toDo.classList.add('toDo')
+            //         toDo.setAttribute('data-id', `${u}`)
+            //         toDo.style.backgroundColor = this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done ? "lightgreen" : "'rgb(255, 169, 169)"
 
-                    const toDoTitle = document.createElement('div')
-                    toDoTitle.classList.add('toDoTitle')
-                    toDoTitle.textContent =  this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].title;
+            //         const toDoTitle = document.createElement('div')
+            //         toDoTitle.classList.add('toDoTitle')
+            //         toDoTitle.textContent =  this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].title;
 
-                    const toDoRightSide = document.createElement('div')
-                    toDoRightSide.classList.add('toDoRightSide')
+            //         const toDoRightSide = document.createElement('div')
+            //         toDoRightSide.classList.add('toDoRightSide')
 
-                    const date = document.createElement('input')
-                    date.setAttribute('type', 'date')
-                    date.setAttribute('id', 'date')
-                    date.value =  this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].date
+            //         const date = document.createElement('input')
+            //         date.setAttribute('type', 'date')
+            //         date.setAttribute('id', 'date')
+            //         date.value =  this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].date
 
-                    const markDone = document.createElement('div')
-                    markDone.classList.add('markDone')
-                    markDone.setAttribute('id', 'markDone')
-                    markDone.textContent = this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done ? 'Mark Undone' : 'Mark Done'
-                    markDone.addEventListener('click', () => {
+            //         const markDone = document.createElement('div')
+            //         markDone.classList.add('markDone')
+            //         markDone.setAttribute('id', 'markDone')
+            //         markDone.textContent = this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done ? 'Mark Undone' : 'Mark Done'
+            //         markDone.addEventListener('click', () => {
                     
-                        switch (markDone.textContent) {
-                            case 'Mark Done':
-                                markDone.textContent = 'Mark Undone';
-                                toDo.style.backgroundColor = 'lightgreen';
-                                this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done = true
-                                console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done)
-                                break;
+            //             switch (markDone.textContent) {
+            //                 case 'Mark Done':
+            //                     markDone.textContent = 'Mark Undone';
+            //                     toDo.style.backgroundColor = 'lightgreen';
+            //                     this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done = true
+            //                     console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done)
+            //                     break;
                             
-                            case 'Mark Undone':
-                                markDone.textContent = 'Mark Done'
-                                toDo.style.backgroundColor = 'rgb(255, 169, 169)'
-                                this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done = false
-                                console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].doneg)
-                                break;
+            //                 case 'Mark Undone':
+            //                     markDone.textContent = 'Mark Done'
+            //                     toDo.style.backgroundColor = 'rgb(255, 169, 169)'
+            //                     this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done = false
+            //                     console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].doneg)
+            //                     break;
 
-                        }
-                    })
+            //             }
+            //         })
                 
-                    const deleteToDoBtn = document.createElement('div')
-                    deleteToDoBtn.setAttribute('id', 'deleteToDoBtn')
+            //         const deleteToDoBtn = document.createElement('div')
+            //         deleteToDoBtn.setAttribute('id', 'deleteToDoBtn')
 
-                    toDoRightSide.appendChild(date)
-                    toDoRightSide.appendChild(markDone)
-                    toDoRightSide.appendChild(deleteToDoBtn)
+            //         toDoRightSide.appendChild(date)
+            //         toDoRightSide.appendChild(markDone)
+            //         toDoRightSide.appendChild(deleteToDoBtn)
 
-                    toDo.appendChild(toDoTitle)
-                    toDo.appendChild(toDoRightSide)
+            //         toDo.appendChild(toDoTitle)
+            //         toDo.appendChild(toDoRightSide)
 
-                    this.toDoListDOM.appendChild(toDo)
+            //         this.toDoListDOM.appendChild(toDo)
 
-                    deleteToDoBtn.addEventListener('click', (e) => {
-                        const target = e.currentTarget.parentNode.parentNode
-                        this.toDoListDOM.removeChild(target)
-                        this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos.splice(target.dataset.id, 1)
-                        this.renderProjectList();
-                        console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos)
+            //         deleteToDoBtn.addEventListener('click', (e) => {
+            //             const target = e.currentTarget.parentNode.parentNode
+            //             this.toDoListDOM.removeChild(target)
+            //             this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos.splice(target.dataset.id, 1)
+            //             this.renderProjectList();
+            //             console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos)
 
-                    })
-                }
-            }
+            //         })
+            //     }
+            // }
         }
     },
 
