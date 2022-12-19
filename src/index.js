@@ -9,7 +9,7 @@ import './style.scss';
     init: function() {
         this.cacheDom();
         this.bindEvents();
-        this.renderProjectList();
+        this.render();
     },
     cacheDom: function() {
         this.addProjectBtn = document.getElementById('add')
@@ -26,6 +26,7 @@ import './style.scss';
         this.cancelToDoInputBtn = document.getElementById('cancelToDoInput')
         this.toDoInputDate = document.getElementById('toDoInputDate')
         this.toDoListDOM = document.getElementById('toDoList')
+        this.toDoListTitle = document.getElementById('toDoListTitle')
     },
     bindEvents: function() {
            this.addProjectBtn.addEventListener('click', () => {
@@ -38,7 +39,7 @@ import './style.scss';
             this.addProject();
             this.projectTitleInput.value = ''
             this.projectTitleInputDiv.style.display = 'none'
-            this.renderProjectList();
+            this.render();
         }),
         this.projectTitleInputCancel.addEventListener('click', (e) => {
             e.preventDefault();
@@ -66,7 +67,8 @@ import './style.scss';
         this.projectListArr.splice(target.dataset.id, 1)
 
     },
-    renderProjectList: function () {
+    render: function () {
+
         while (this.projectList.firstChild) {
             this.projectList.removeChild(this.projectList.firstChild);
         };
@@ -80,7 +82,7 @@ import './style.scss';
             div.setAttribute('data-id', `${i}`)
             const title = document.createElement('div')
             title.classList.add('title')
-            title.addEventListener('click', (e) => {this.renderToDo(e)})
+            // title.addEventListener('click', (e) => {this.renderToDo(e)})
             div.classList.add('project')
             const deleteBtn = document.createElement('button')
             deleteBtn.classList.add('delete')
@@ -90,15 +92,21 @@ import './style.scss';
             title.textContent = this.projectListArr[i].title
             this.projectList.appendChild(div)
 
+            div.addEventListener('click', () => {
+                renderProjectsToDos(div.dataset.id)
+            })}
 
-            for(let u = 0; u < this.projectListArr[i].toDos.length; u++) {
-                if(this.projectListArr[i].toDos[u] === "add ToDo") {
+
+           function renderProjectsToDos (number) {
+
+            for(let u = 0; u < this.projectListArr[number].toDos.length; u++) {
+                if(this.projectListArr[number].toDos[u] === "add ToDo") {
 
                     const addToDo = document.createElement('div')
                     addToDo.style.display = 'flex'
                     addToDo.classList.add('addToDo')
                     addToDo.setAttribute('id', `addToDo`);
-                    addToDo.setAttribute('data-id', `${i}`)
+                    addToDo.setAttribute('data-id', `${number}`)
                     const addToDoBtn = document.createElement('div')
                     addToDoBtn.classList.add('addToDoBtn')
                     const addToDoBtnTitle = document.createElement('div')
@@ -112,7 +120,7 @@ import './style.scss';
                     addToDo.addEventListener('click', () => {
                         this.toDoInputFieldForm.style.display = 'flex'
                         addToDo.style.display = 'none'
-                        this.toDoInputFieldForm.setAttribute('data-id', `${i}`)
+                        this.toDoInputFieldForm.setAttribute('data-id', `${number}`)
                         this.toDoInputField.focus();
                     })
 
@@ -194,6 +202,7 @@ import './style.scss';
             }
         }
     },
+
     createToDo: function () {
         class ToDo {
             constructor (title, date) {
