@@ -130,6 +130,8 @@ import './style.scss';
 
                     const toDo = document.createElement('div')
                     toDo.classList.add('toDo')
+                    toDo.setAttribute('data-id', `${u}`)
+                    toDo.style.backgroundColor = this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done ? "lightgreen" : "'rgb(255, 169, 169)"
 
                     const toDoTitle = document.createElement('div')
                     toDoTitle.classList.add('toDoTitle')
@@ -146,8 +148,27 @@ import './style.scss';
                     const markDone = document.createElement('div')
                     markDone.classList.add('markDone')
                     markDone.setAttribute('id', 'markDone')
-                    markDone.textContent = 'Mark Done'
+                    markDone.textContent = this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done ? 'Mark Undone' : 'Mark Done'
+                    markDone.addEventListener('click', () => {
+                    
+                        switch (markDone.textContent) {
+                            case 'Mark Done':
+                                markDone.textContent = 'Mark Undone';
+                                toDo.style.backgroundColor = 'lightgreen';
+                                this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done = true
+                                console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done)
+                                break;
+                            
+                            case 'Mark Undone':
+                                markDone.textContent = 'Mark Done'
+                                toDo.style.backgroundColor = 'rgb(255, 169, 169)'
+                                this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done = false
+                                console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done)
+                                break;
 
+                        }
+                    })
+                
                     const deleteToDoBtn = document.createElement('div')
                     deleteToDoBtn.setAttribute('id', 'deleteToDoBtn')
 
@@ -159,6 +180,14 @@ import './style.scss';
                     toDo.appendChild(toDoRightSide)
 
                     this.toDoListDOM.appendChild(toDo)
+
+                    deleteToDoBtn.addEventListener('click', (e) => {
+                        const target = e.currentTarget.parentNode.parentNode
+                        this.toDoListDOM.removeChild(target)
+                        this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos.splice(target.dataset.id, 1)
+                        console.log( this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos)
+
+                    })
                 }
             }
         }
@@ -168,6 +197,7 @@ import './style.scss';
             constructor (title, date) {
                 this.title = title;
                 this.date = date;
+                this.done = true;
             }
         }
         this.toDo = new ToDo(this.toDoInputField.value, this.toDoInputDate.value)

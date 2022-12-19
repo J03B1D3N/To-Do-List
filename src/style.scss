@@ -335,7 +335,7 @@ main {
             .toDoTitle {
                 color: black;
                 font-size: 1.5rem;
-                width: 58%;
+                width: 50%;
                 height: 1.7rem;
                 display: flex;
                 align-items: center;
@@ -348,10 +348,11 @@ main {
             .markDone {
                 color: black;
                 padding: 0px 5px;
+                border-radius: 5px;
             }
             .markDone:hover {
                 cursor: pointer;
-                background-color: rgb(174, 110, 110)
+                background-color: lightgrey;
             }
             
             .toDoRightSide {
@@ -381,7 +382,7 @@ main {
                     transform: rotate(-45deg);
                 }
                 #deleteToDoBtn:hover {
-                    background-color: rgb(174, 110, 110);
+                    background-color: lightgrey;
                 }
                 #date {
                     color: black;
