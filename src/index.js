@@ -98,10 +98,10 @@ import './style.scss';
             title.textContent = this.projectListArr[i].title
             this.projectList.appendChild(div)
 
-            div.addEventListener('click', () => {
+            title.addEventListener('click', () => {
                 n = div.dataset.id
                 this.renderToDoList(n)
-
+                this.toDoListTitle.textContent = title.textContent
             })
         }
 },
@@ -116,9 +116,11 @@ renderToDoList: function (n) {
     if (this.projectListArr[n].toDos[u] === "add ToDo") {
         this.createAddToDoBtn(n)
         this.createToDoInputForm(n)
-        this.addLaterEventListeners()
+        this.addLaterEventListenersFirstHalf(n)
+        
     } else {
-
+        this.createToDoDOM(u);
+        this.addLaterEventListenersSecondHalf(n)
     }
 
 
@@ -179,7 +181,7 @@ renderToDoList: function (n) {
             this.toDoListDOM.appendChild(this.toDoInputFieldForm)
     },
 
-    addLaterEventListeners: function() {
+    addLaterEventListenersFirstHalf: function(n) {
 
         addToDo.addEventListener('click', () => {
             addToDo.style.display = 'none'
@@ -198,77 +200,84 @@ renderToDoList: function (n) {
             this.renderToDoList(n);
         } , {once: true}) 
 
-        // inputCancelBtn.addEventListener('click', (e) => {
-        //     e.preventDefault();
-        //     toDoInputFieldForm.style.display = 'none'
-        //     toDoInput.value = '';
-        //     inputDate.value = '';
-        //     addToDo.style.display = 'flex'
-        // })
+        this.inputCancelBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.toDoInputFieldForm.style.display = 'none'
+            this.toDoInput.value = '';
+            this.inputDate.value = '';
+            addToDo.style.display = 'flex'
+            this.renderToDoList(n)
+        })
+    },
+    addLaterEventListenersSecondHalf: function(n) {
+        
 
-        // deleteToDoBtn.addEventListener('click', (e) => {
-        //     const target = e.currentTarget.parentNode.parentNode
-        //     this.toDoListDOM.removeChild(target)
-        //     this.projectListArr[toDoInputFieldForm.dataset.id].toDos.splice(target.dataset.id, 1)
-        //     console.log(this.projectListArr[toDoInputFieldForm.dataset.id].toDos)
-        //     this.renderToDoList(n)
+        this.deleteToDoBtn.addEventListener('click', (e) => {
+            const target = e.currentTarget.parentNode.parentNode
+            this.toDoListDOM.removeChild(target)
+            this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos.splice(target.dataset.id, 1)
+            console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos)
+            this.renderToDoList(n)
 
-        // },{once:true})
+        },{once:true})
 
     },
-    createToDoDOM: function () {
-        const toDo = document.createElement('div')
-            toDo.classList.add('toDo')
-            toDo.setAttribute('data-id', `${u}`)
-            toDo.style.backgroundColor = this.projectListArr[toDoInputFieldForm.dataset.id].toDos[u].done ? "lightgreen" : "'rgb(255, 169, 169)"
+    createToDoDOM: function (u) {
+            this.toDo = document.createElement('div')
+            this.toDo.classList.add('toDo')
+            this.toDo.setAttribute('data-id', `${u}`)
+            this.toDo.style.backgroundColor = this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done ? "lightgreen" : "'rgb(255, 169, 169)"
 
-            const toDoTitle = document.createElement('div')
-            toDoTitle.classList.add('toDoTitle')
-            toDoTitle.textContent =  this.projectListArr[toDoInputFieldForm.dataset.id].toDos[u].title;
+            this.toDoTitle = document.createElement('div')
+            this.toDoTitle.classList.add('toDoTitle')
+            this.toDoTitle.textContent =  this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].title;
 
-            const toDoRightSide = document.createElement('div')
-            toDoRightSide.classList.add('toDoRightSide')
+            this.toDoRightSide = document.createElement('div')
+            this.toDoRightSide.classList.add('toDoRightSide')
 
-            const date = document.createElement('input')
-            date.setAttribute('type', 'date')
-            date.setAttribute('id', 'date')
-            date.value =  this.projectListArr[toDoInputFieldForm.dataset.id].toDos[u].date
+            this.date = document.createElement('input')
+            this.date.setAttribute('type', 'date')
+            this.date.setAttribute('id', 'date')
+            this.date.value =  this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].date
 
-            const markDone = document.createElement('div')
-            markDone.classList.add('markDone')
-            markDone.setAttribute('id', 'markDone')
-            markDone.textContent = this.projectListArr[toDoInputFieldForm.dataset.id].toDos[u].done ? 'Mark Undone' : 'Mark Done'
-            markDone.addEventListener('click', () => {
+            this.markDone = document.createElement('div')
+            this.markDone.classList.add('markDone')
+            this.markDone.setAttribute('data-id',`${u}`)
+            this.markDone.setAttribute('id', 'markDone')
+            this.markDone.textContent = this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done ? 'Mark Undone' : 'Mark Done'
             
-                switch (markDone.textContent) {
+            this.markDone.addEventListener('click', (e) => {
+                const target = e.currentTarget.parentNode.parentNode
+
+                switch (e.target.textContent) {
                     case 'Mark Done':
-                        markDone.textContent = 'Mark Undone';
-                        toDo.style.backgroundColor = 'lightgreen';
-                        this.projectListArr[toDoInputFieldForm.dataset.id].toDos[u].done = true
-                        console.log(this.projectListArr[toDoInputFieldForm.dataset.id].toDos[u].done)
+                        e.target.textContent = 'Mark Undone';
+                        target.style.backgroundColor = 'lightgreen';
+                        this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[e.target.dataset.id].done = true
+                        console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[e.target.dataset.id].done)
                         break;
                     
                     case 'Mark Undone':
-                        markDone.textContent = 'Mark Done'
-                        toDo.style.backgroundColor = 'rgb(255, 169, 169)'
-                        this.projectListArr[toDoInputFieldForm.dataset.id].toDos[u].done = false
-                        console.log(this.projectListArr[toDoInputFieldForm.dataset.id].toDos[u].done)
+                        e.target.textContent = 'Mark Done'
+                        target.style.backgroundColor = 'rgb(255, 169, 169)'
+                        this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[e.target.dataset.id].done = false
+                        console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[e.target.dataset.id].done)
                         break;
 
                 }
             })
         
-            const deleteToDoBtn = document.createElement('div')
-            deleteToDoBtn.setAttribute('id', 'deleteToDoBtn')
+            this.deleteToDoBtn = document.createElement('div')
+            this.deleteToDoBtn.setAttribute('id', 'deleteToDoBtn')
 
-            toDoRightSide.appendChild(date)
-            toDoRightSide.appendChild(markDone)
-            toDoRightSide.appendChild(deleteToDoBtn)
+            this.toDoRightSide.appendChild(this.date)
+            this.toDoRightSide.appendChild(this.markDone)
+            this.toDoRightSide.appendChild(this.deleteToDoBtn)
 
-            toDo.appendChild(toDoTitle)
-            toDo.appendChild(toDoRightSide)
+            this.toDo.appendChild(this.toDoTitle)
+            this.toDo.appendChild(this.toDoRightSide)
 
-            this.toDoListDOM.appendChild(toDo)
+            this.toDoListDOM.appendChild(this.toDo)
     },
 
     createTodo: function() {
