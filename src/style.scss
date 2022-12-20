@@ -248,7 +248,7 @@ main {
             display: none;
             #toDoInput {
                 border: 1px solid black;
-                background-color: $todo;
+                background-color: inherit;
                 border-radius: $toDoBR;
                 height: 90%;
                 color: black;
@@ -331,7 +331,18 @@ main {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0px 15px;
+            padding: 0px 10px;
+            .toDoTitleInput {
+                border: 1px solid black;
+                background-color: inherit;
+                border-radius: $toDoBR;
+                height: 90%;
+                color: black;
+                padding: 0px 20px;  
+            }
+            .toDoTitleInput:focus {
+                outline: 1px solid black;
+            }
             .toDoTitle {
                 color: black;
                 font-size: 1.5rem;
@@ -341,7 +352,11 @@ main {
                 align-items: center;
                 overflow: hidden;
                 overflow: auto;
+                cursor: pointer;
+                background-color: inherit;
+                border: none;
             }
+            
             .toDoTitle::-webkit-scrollbar {
                 display: none;
               }
@@ -349,6 +364,8 @@ main {
                 color: black;
                 padding: 0px 5px;
                 border-radius: 5px;
+                border: none;
+                background-color: inherit;
             }
             .markDone:hover {
                 cursor: pointer;

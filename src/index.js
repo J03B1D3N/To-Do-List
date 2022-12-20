@@ -106,7 +106,6 @@ import './style.scss';
         }
 },
 renderToDoList: function (n) {
-    console.log(n)
     
     while (this.toDoListDOM.firstChild) {
         this.toDoListDOM.removeChild(this.toDoListDOM.firstChild)
@@ -231,6 +230,25 @@ renderToDoList: function (n) {
             this.toDoTitle = document.createElement('div')
             this.toDoTitle.classList.add('toDoTitle')
             this.toDoTitle.textContent =  this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].title;
+            this.toDoTitleInput = document.createElement('input')
+            this.toDoTitleInput.setAttribute('type','text')
+            this.toDoTitleInput.classList.add('toDoTitle')
+            this.toDoTitleInput.style.display = 'none'
+
+            this.toDoTitle.addEventListener('click', () => {
+                this.toDoTitle.style.display = 'none'
+                this.toDoTitleInput.style.display = 'block'
+                this.toDoTitleInput.focus()
+            })
+
+            this.toDoTitleInput.addEventListener('enter', () => {
+                this.toDoTitleInput.style.display = 'none'
+                this.toDoTitle.textContent = this.toDoTitleInput.value
+                this.toDoTitle.style.display = 'flex'
+                this.toDoTitleInput.value = ''
+                this.renderToDoList(n)
+
+            })
 
             this.toDoRightSide = document.createElement('div')
             this.toDoRightSide.classList.add('toDoRightSide')
@@ -240,7 +258,7 @@ renderToDoList: function (n) {
             this.date.setAttribute('id', 'date')
             this.date.value =  this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].date
 
-            this.markDone = document.createElement('div')
+            this.markDone = document.createElement('button')
             this.markDone.classList.add('markDone')
             this.markDone.setAttribute('data-id',`${u}`)
             this.markDone.setAttribute('id', 'markDone')
@@ -275,6 +293,7 @@ renderToDoList: function (n) {
             this.toDoRightSide.appendChild(this.deleteToDoBtn)
 
             this.toDo.appendChild(this.toDoTitle)
+            this.toDo.appendChild(this.toDoTitleInput)
             this.toDo.appendChild(this.toDoRightSide)
 
             this.toDoListDOM.appendChild(this.toDo)
