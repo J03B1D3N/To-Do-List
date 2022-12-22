@@ -69,6 +69,7 @@ import './style.scss';
             constructor  (projectTitleInput) {
                 this.title = projectTitleInput
                 this.toDos = ['add ToDo']
+                this.selected = false
             }
             }
         this.project = new Project(this.projectTitleInput.value)
@@ -109,6 +110,15 @@ import './style.scss';
             this.div = document.createElement('div')
             this.div.setAttribute('data-id', `${i}`)
             this.div.classList.add('project')
+            switch (this.projectListArr[i].selected) {
+               case true:
+                this.div.style.backgroundColor = 'grey'
+                break;
+
+                case false: 
+                this.div.style.backgroundColor = 'rgb(240, 235, 206)'
+                break;
+            }
             this.title = document.createElement('div')
             this.title.classList.add('title')
             this.deleteBtn = document.createElement('button')
@@ -123,9 +133,11 @@ import './style.scss';
             this.projectList.appendChild(this.div)
 
             this.title.addEventListener('click', (e) => {
-                const target = e.target.parentNode
+                const target = e.target.parentNode         
+                target.style.backgroundColor = 'grey'
                 console.log(target)
                 n = target.dataset.id
+                this.projectListArr[target.dataset.id] = true
                 this.renderToDoList(n)
                 this.toDoListTitle.textContent = target.textContent
             })
