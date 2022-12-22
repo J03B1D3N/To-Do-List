@@ -19,8 +19,12 @@ import './style.scss';
         if(JSON.parse(localStorage.getItem('projectListArr')) === null) {
             this.projectListArr = [];
         } else {
-            this.projectListArr = JSON.parse(localStorage.getItem('projectListArr'))
+            this.projectListArr = JSON.parse(localStorage.getItem('projectListArr'));
+            for(let e = 0; e < this.projectListArr.length; e++) {
+                this.projectListArr[e].selected = false
+            }
         }
+
     },
     cacheDom: function() {
         this.addProjectBtn = document.getElementById('add')
@@ -69,7 +73,6 @@ import './style.scss';
             constructor  (projectTitleInput) {
                 this.title = projectTitleInput
                 this.toDos = ['add ToDo']
-                this.selected = false
             }
             }
         this.project = new Project(this.projectTitleInput.value)
@@ -111,13 +114,12 @@ import './style.scss';
             this.div.setAttribute('data-id', `${i}`)
             this.div.classList.add('project')
             switch (this.projectListArr[i].selected) {
-               case true:
-                this.div.style.backgroundColor = 'grey'
-                break;
-
-                case false: 
-                this.div.style.backgroundColor = 'rgb(240, 235, 206)'
-                break;
+                case true:
+                    this.div.style.backgroundColor  = 'grey'
+                    break;
+                case false:
+                    this.div.style.backgroundColor = 'rgb(240, 235, 206)'
+                    break;
             }
             this.title = document.createElement('div')
             this.title.classList.add('title')
@@ -133,15 +135,20 @@ import './style.scss';
             this.projectList.appendChild(this.div)
 
             this.title.addEventListener('click', (e) => {
-                const target = e.target.parentNode         
+                const target = e.target.parentNode
                 target.style.backgroundColor = 'grey'
                 console.log(target)
                 n = target.dataset.id
-                this.projectListArr[target.dataset.id] = true
+                for(let w = 0; w < this.projectListArr.length; w++) {
+                    this.projectListArr[w].selected = false
+                }
+                this.projectListArr[n].selected = true;
                 this.renderToDoList(n)
                 this.toDoListTitle.textContent = target.textContent
+                this.renderProjectList();
             })
         }
+        
 },
 renderToDoList: function (n) {
     
