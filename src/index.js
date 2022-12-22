@@ -10,9 +10,18 @@ import './style.scss';
     let todoApp = {
         projectListArr : [],
     init: function() {
+        this.boot();
         this.cacheDom();
         this.bindEvents();
         this.renderProjectList();
+    },
+    boot: function () {
+        if(JSON.parse(localStorage.getItem('projectListArr')) === null) {
+            this.projectListArr = [];
+        } else {
+            this.projectListArr = JSON.parse(localStorage.getItem('projectListArr'))
+            console.log(this.projectListArr)
+        }
     },
     cacheDom: function() {
         this.addProjectBtn = document.getElementById('add')
@@ -31,6 +40,11 @@ import './style.scss';
         this.toDoListDOM = document.getElementById('toDoList')
         this.toDoListTitle = document.getElementById('toDoListTitle')
     },
+    udpateLocalStorage: function() {
+        const storage = this.projectListArr
+        localStorage.setItem('projectListArr', 
+        JSON.stringify(storage))
+    },
     bindEvents: function() {
            this.addProjectBtn.addEventListener('click', () => {
            this.projectTitleInputDiv.style.display = 'flex'
@@ -42,6 +56,7 @@ import './style.scss';
             this.addProject();
             this.projectTitleInput.value = ''
             this.projectTitleInputDiv.style.display = 'none'
+            this.udpateLocalStorage();
             this.renderProjectList();
         }),
         this.projectTitleInputCancel.addEventListener('click', (e) => {
@@ -82,8 +97,10 @@ import './style.scss';
 
         while (this.toDoListDOM.firstChild) {
             this.toDoListDOM.removeChild(this.toDoListDOM.firstChild)
-         };
+        };
         
+        
+
         for(let i = 0; i < this.projectListArr.length; i++) {
             const div = document.createElement('div')
             div.setAttribute('data-id', `${i}`)
@@ -196,6 +213,8 @@ renderToDoList: function (n) {
             this.toDoInput.value = '';
             this.inputDate.value = '';
             console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos)
+            localStorage.projectArray = this.projectListArr
+            this.udpateLocalStorage();
             this.renderToDoList(n);
         } , {once: true}) 
 
@@ -205,6 +224,7 @@ renderToDoList: function (n) {
             this.toDoInput.value = '';
             this.inputDate.value = '';
             addToDo.style.display = 'flex'
+            this.udpateLocalStorage();
             this.renderToDoList(n)
         })
     },
@@ -216,6 +236,8 @@ renderToDoList: function (n) {
             this.toDoListDOM.removeChild(target)
             this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos.splice(target.dataset.id, 1)
             console.log(this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos)
+            localStorage.projectArray = this.projectListArr
+            this.udpateLocalStorage();
             this.renderToDoList(n)
 
         },{once:true})
@@ -237,10 +259,11 @@ renderToDoList: function (n) {
             console.log(form, formInput, todoTitle)
             todoTitle.textContent = formInput.value
             this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[form.dataset.id].title = formInput.value
+            localStorage.projectArray = this.projectListArr
             formInput.style.display = 'none'
             todoTitle.style.display = 'flex'
             formInput.value = ''
-            
+            this.udpateLocalStorage();
         })
         
 
