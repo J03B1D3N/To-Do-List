@@ -220,6 +220,30 @@ renderToDoList: function (n) {
 
         },{once:true})
 
+        this.toDoTitle.addEventListener('click', (e) => {
+            const target = e.target;
+            target.style.display = 'none'
+
+            target.parentNode.children[1].children[0].style.display = 'block'
+            target.parentNode.children[1].children[0].value = target.textContent
+            target.parentNode.children[1].children[0].focus()
+        })
+
+        this.toDoTitleInputForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form = e.target
+            const formInput = form.parentNode.children[1].children[0]
+            const todoTitle =  form.parentNode.children[0]
+            console.log(form, formInput, todoTitle)
+            todoTitle.textContent = formInput.value
+            this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[form.dataset.id].title = formInput.value
+            formInput.style.display = 'none'
+            todoTitle.style.display = 'flex'
+            formInput.value = ''
+            
+        })
+        
+
     },
     createToDoDOM: function (u) {
             this.toDo = document.createElement('div')
@@ -227,28 +251,23 @@ renderToDoList: function (n) {
             this.toDo.setAttribute('data-id', `${u}`)
             this.toDo.style.backgroundColor = this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].done ? "lightgreen" : "'rgb(255, 169, 169)"
 
+            this.todoNumber = document.createElement('div')
+            this.todoNumber.textContent = `${u}`
+            this.todoNumber.classList.add('toDoNumber')
+
             this.toDoTitle = document.createElement('div')
             this.toDoTitle.classList.add('toDoTitle')
+            this.toDoTitle.setAttribute('data-id',`${u}`)
             this.toDoTitle.textContent =  this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[u].title;
+            this.toDoTitleInputForm = document.createElement('form')
+            this.toDoTitleInputForm.setAttribute('data-id',`${u}`)
             this.toDoTitleInput = document.createElement('input')
             this.toDoTitleInput.setAttribute('type','text')
-            this.toDoTitleInput.classList.add('toDoTitle')
+            this.toDoTitleInput.setAttribute('data-id',`${u}`)
+            this.toDoTitleInput.classList.add('toDoTitleInput')
             this.toDoTitleInput.style.display = 'none'
 
-            this.toDoTitle.addEventListener('click', () => {
-                this.toDoTitle.style.display = 'none'
-                this.toDoTitleInput.style.display = 'block'
-                this.toDoTitleInput.focus()
-            })
-
-            this.toDoTitleInput.addEventListener('enter', () => {
-                this.toDoTitleInput.style.display = 'none'
-                this.toDoTitle.textContent = this.toDoTitleInput.value
-                this.toDoTitle.style.display = 'flex'
-                this.toDoTitleInput.value = ''
-                this.renderToDoList(n)
-
-            })
+           
 
             this.toDoRightSide = document.createElement('div')
             this.toDoRightSide.classList.add('toDoRightSide')
@@ -288,12 +307,14 @@ renderToDoList: function (n) {
             this.deleteToDoBtn = document.createElement('div')
             this.deleteToDoBtn.setAttribute('id', 'deleteToDoBtn')
 
+            this.toDo.appendChild(this.todoNumber)
             this.toDoRightSide.appendChild(this.date)
             this.toDoRightSide.appendChild(this.markDone)
             this.toDoRightSide.appendChild(this.deleteToDoBtn)
-
             this.toDo.appendChild(this.toDoTitle)
-            this.toDo.appendChild(this.toDoTitleInput)
+            
+            this.toDoTitleInputForm.appendChild(this.toDoTitleInput)
+            this.toDo.appendChild(this.toDoTitleInputForm)
             this.toDo.appendChild(this.toDoRightSide)
 
             this.toDoListDOM.appendChild(this.toDo)
