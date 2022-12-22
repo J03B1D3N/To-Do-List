@@ -41,9 +41,8 @@ import './style.scss';
         this.toDoListTitle = document.getElementById('toDoListTitle')
     },
     udpateLocalStorage: function() {
-        const storage = this.projectListArr
         localStorage.setItem('projectListArr', 
-        JSON.stringify(storage))
+        JSON.stringify(this.projectListArr))
     },
     bindEvents: function() {
            this.addProjectBtn.addEventListener('click', () => {
@@ -243,20 +242,24 @@ renderToDoList: function (n) {
         },{once:true})
 
         this.toDoTitle.addEventListener('click', (e) => {
-            const target = e.target;
-            target.style.display = 'none'
+            const target = e.target
+            const todo = e.target.parentNode;
+            const title = todo.children[1]
+            const input = todo.children[2].children[0]
+            console.log(todo.children)
+            title.style.display = 'none'
 
-            target.parentNode.children[1].children[0].style.display = 'block'
-            target.parentNode.children[1].children[0].value = target.textContent
-            target.parentNode.children[1].children[0].focus()
+            input.value = target.textContent
+            input.style.display = 'block'
+            input.focus()
         })
 
         this.toDoTitleInputForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const form = e.target
-            const formInput = form.parentNode.children[1].children[0]
-            const todoTitle =  form.parentNode.children[0]
-            console.log(form, formInput, todoTitle)
+            console.log(form)
+            const formInput = form.parentNode.children[2].children[0]
+            const todoTitle =  form.parentNode.children[1]
             todoTitle.textContent = formInput.value
             this.projectListArr[this.toDoInputFieldForm.dataset.id].toDos[form.dataset.id].title = formInput.value
             localStorage.projectArray = this.projectListArr

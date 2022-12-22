@@ -350,7 +350,8 @@ main {
                 border-radius: $toDoBR;
                 height: 70%;
                 color: black;
-                padding: 0px 20px;  
+                padding: 0px 10px;  
+                width: 26rem;
             }
             .toDoTitle:focus {
                 outline: 1px solid black;
