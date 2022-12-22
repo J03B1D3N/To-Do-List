@@ -20,7 +20,6 @@ import './style.scss';
             this.projectListArr = [];
         } else {
             this.projectListArr = JSON.parse(localStorage.getItem('projectListArr'))
-            console.log(this.projectListArr)
         }
     },
     cacheDom: function() {
@@ -33,7 +32,6 @@ import './style.scss';
         this.projectTitleInputConfirm = document.getElementById('submitTitleInput')
         this.projectTitleInputCancel = document.getElementById('cancelTitleInput')
         this.addToDoBtn = document.getElementById('addToDo')
-        // this.toDoInputFieldForm = document.getElementById('toDoInputField')
         this.toDoInputField = document.getElementById('toDoInput')
         this.cancelToDoInputBtn = document.getElementById('cancelToDoInput')
         this.toDoInputDate = document.getElementById('toDoInputDate')
@@ -82,7 +80,7 @@ import './style.scss';
         const target = event.currentTarget.parentNode
         target.remove();
         this.projectListArr.splice(target.dataset.id, 1)
-
+        this.udpateLocalStorage();
     },
     
 
@@ -103,15 +101,18 @@ import './style.scss';
         for(let i = 0; i < this.projectListArr.length; i++) {
             const div = document.createElement('div')
             div.setAttribute('data-id', `${i}`)
+            div.classList.add('project')
             const title = document.createElement('div')
             title.classList.add('title')
-            div.classList.add('project')
             const deleteBtn = document.createElement('button')
             deleteBtn.classList.add('delete')
             deleteBtn.addEventListener('click', (e) => {this.deleteProject(e)})
             div.appendChild(deleteBtn)
             div.appendChild(title)
+
+
             title.textContent = this.projectListArr[i].title
+
             this.projectList.appendChild(div)
 
             title.addEventListener('click', () => {
