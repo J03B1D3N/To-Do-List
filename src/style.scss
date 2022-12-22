@@ -112,6 +112,11 @@ nav {
                 font-size: 1.5rem;
                 width: 9rem;
                 height: 1.9rem;
+                overflow: hidden;
+                overflow-x: auto;
+            }
+            .title::-webkit-scrollbar{
+                display: none;
             }
             .title:hover {
                 cursor: pointer;
