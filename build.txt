@@ -19,3 +19,12 @@ Interface shoud {
 
 projects are objects in an array
 to add to dos to projects we need to add an array method to the project objects i think
+
+
+tasks left :
+connect title to input. done
+connect date to input. done
+clear 
+
+add mark done button functionality
+add delete button functionality
